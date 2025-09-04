@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-keywords",
-  "version": "0.0.23",
+  "version": "1.0.0",
   "description": "A Rollup plugin that provides minifiable Symbols (keywords) to use in place of string literals for aggressive minification.",
   "keywords": [
     "rollup",
