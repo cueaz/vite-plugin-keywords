@@ -1,11 +1,12 @@
 {
   "name": "rollup-plugin-keywords",
-  "version": "1.0.0",
-  "description": "A Rollup plugin that provides minifiable Symbols (keywords) to use in place of string literals for aggressive minification.",
+  "version": "1.0.1",
+  "description": "A Rollup plugin that provides minifiable Symbols (keywords) to use in place of string literals for aggressive minification/obfuscation.",
   "keywords": [
     "rollup",
     "rollup-plugin",
-    "minification"
+    "minification",
+    "obfuscation"
   ],
   "repository": {
     "type": "git",

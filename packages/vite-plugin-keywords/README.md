@@ -14,9 +14,9 @@
 > [!NOTE]
 > A Rollup version of this plugin, `rollup-plugin-keywords`, is also available. The primary difference is that the Vite plugin utilizes the `hotUpdate` hook to incrementally collect keywords and update modules and types during development. While this documentation is written primarily for the Vite plugin, the setup is almost identical—just add `rollup-plugin-keywords` to your Rollup configuration.
 
-A Vite plugin that provides a way to use minifiable `Symbols` (keywords) in place of string literals and object keys, offering a potential strategy for aggressive minification.
+A Vite plugin that provides a way to use minifiable `Symbols` (keywords) in place of string literals and object keys, offering a potential strategy for aggressive minification/obfuscation.
 
-This approach introduces a trade-off between a small reduction in bundle size and an increase in code complexity. It is best suited for ~~applications where every byte counts~~ minification nerds.
+This approach introduces a trade-off between a small reduction in bundle size and an increase in code complexity. It is best suited for ~~applications where every byte counts~~ minification/obfuscation nerds.
 
 ## Rationale
 
@@ -130,55 +130,55 @@ pnpm add -D vite-plugin-keywords
 
 ## Setup
 
-1.  Add the plugin to your `vite.config.ts`.
+1. Add the plugin to your `vite.config.ts`.
 
-    ```ts
-    // vite.config.ts
-    import { defineConfig } from 'vite';
-    import keywords from 'vite-plugin-keywords';
+   ```ts
+   // vite.config.ts
+   import { defineConfig } from 'vite';
+   import keywords from 'vite-plugin-keywords';
 
-    export default defineConfig({
-      plugins: [keywords()],
-    });
-    ```
+   export default defineConfig({
+     plugins: [keywords()],
+   });
+   ```
 
-2.  Include the generated types file in your `tsconfig.json` or `src/env.d.ts`.
+2. Include the generated types file in your `tsconfig.json` or `src/env.d.ts`.
 
-    ```jsonc
-    // tsconfig.json
-    {
-      // ...
-      "include": [
-        "src",
-        ".keywords/types.d.ts", // Add this line
-      ],
-    }
-    ```
+   ```jsonc
+   // tsconfig.json
+   {
+     // ...
+     "include": [
+       "src",
+       ".keywords/types.d.ts", // Add this line
+     ],
+   }
+   ```
 
-    ```ts
-    // src/env.d.ts
-    /// <reference path="../.keywords/types.d.ts" />
-    ```
+   ```ts
+   // src/env.d.ts
+   /// <reference path="../.keywords/types.d.ts" />
+   ```
 
-3.  Exclude the generated types file from your version control system (e.g., Git).
+3. Exclude the generated types file from your version control system (e.g., Git).
 
-    ```gitignore
-    # .gitignore
-    .keywords/
-    ```
+   ```gitignore
+   # .gitignore
+   .keywords/
+   ```
 
-4.  Ensure that your type-checking script in `package.json` is updated to run the plugin first:
+4. Ensure that your type-checking script in `package.json` is updated to run the plugin first:
 
-    ```jsonc
-    // package.json
-    {
-      "scripts": {
-        "typecheck": "keywords && tsc --noEmit",
-      },
-    }
-    ```
+   ```jsonc
+   // package.json
+   {
+     "scripts": {
+       "typecheck": "keywords && tsc --noEmit",
+     },
+   }
+   ```
 
-5.  The `.keywords/types.d.ts` type file is created automatically on `vite dev/build`, or manually via the `keywords` script.
+5. The `.keywords/types.d.ts` type file is created automatically on `vite dev/build`, or manually via the `keywords` script.
 
 ## Options
 
