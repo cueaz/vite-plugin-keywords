@@ -34,7 +34,7 @@
   "dependencies": {
     "@babel/parser": "^7.28.0",
     "@babel/traverse": "^7.28.0",
-    "globby": "^15.0.0"
+    "globby": "^16.0.0"
   },
   "devDependencies": {
     "@types/babel__traverse": "^7.20.7",
