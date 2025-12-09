@@ -6,9 +6,6 @@ settings:
 
 catalogs:
   default:
-    '@types/node':
-      specifier: ^24.1.0
-      version: 24.10.1
     rimraf:
       specifier: ^6.0.1
       version: 6.1.2
@@ -53,7 +50,7 @@ importers:
         version: 7.28.0
       '@types/node':
         specifier: 'catalog:'
-        version: 24.10.1
+        version: 24.10.2
       rimraf:
         specifier: 'catalog:'
         version: 6.1.2
@@ -62,7 +59,7 @@ importers:
         version: 8.5.1(postcss@8.5.6)(typescript@5.9.3)
       vitest:
         specifier: 'catalog:'
-        version: 4.0.15(@types/node@24.10.1)(jsdom@26.1.0)
+        version: 4.0.15(@types/node@24.10.2)(jsdom@26.1.0)
 
   packages/rollup-plugin-keywords:
     dependencies:
@@ -75,7 +72,7 @@ importers:
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
-        version: 24.10.1
+        version: 24.10.2
       rimraf:
         specifier: 'catalog:'
         version: 6.1.2
@@ -84,7 +81,7 @@ importers:
         version: 8.5.1(postcss@8.5.6)(typescript@5.9.3)
       vitest:
         specifier: 'catalog:'
-        version: 4.0.15(@types/node@24.10.1)(jsdom@26.1.0)
+        version: 4.0.15(@types/node@24.10.2)(jsdom@26.1.0)
 
   packages/vite-plugin-keywords:
     dependencies:
@@ -97,7 +94,7 @@ importers:
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
-        version: 24.10.1
+        version: 24.10.2
       rimraf:
         specifier: 'catalog:'
         version: 6.1.2
@@ -106,7 +103,7 @@ importers:
         version: 8.5.1(postcss@8.5.6)(typescript@5.9.3)
       vitest:
         specifier: 'catalog:'
-        version: 4.0.15(@types/node@24.10.1)(jsdom@26.1.0)
+        version: 4.0.15(@types/node@24.10.2)(jsdom@26.1.0)
 
 packages:
 
@@ -1075,6 +1072,9 @@ packages:
   '@types/node@24.10.1':
     resolution: {integrity: sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ==}
 
+  '@types/node@24.10.2':
+    resolution: {integrity: sha512-WOhQTZ4G8xZ1tjJTvKOpyEVSGgOTvJAfDK3FNFgELyaTpzhdgHVHeqW8V+UJvzF5BT+/B54T/1S2K6gd9c7bbA==}
+
   '@vitest/expect@4.0.15':
     resolution: {integrity: sha512-Gfyva9/GxPAWXIWjyGDli9O+waHDC0Q0jaLdFP1qPAUUfo1FEXPXUfUkp3eZA0sSq340vPycSyOlYUeM15Ft1w==}
 
@@ -1440,8 +1440,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  nwsapi@2.2.22:
-    resolution: {integrity: sha512-ujSMe1OWVn55euT1ihwCI1ZcAaAU3nxUiDwfDQldc51ZXaB9m2AyOn6/jh1BLe2t/G8xd6uKG1UBF2aZJeg2SQ==}
+  nwsapi@2.2.23:
+    resolution: {integrity: sha512-7wfH4sLbt4M0gCDzGE6vzQBo0bfTKjU7Sfpqy/7gs1qBfYz2vEJH6vXcBKpO3+6Yu1telwd0t9HpyOoLEQQbIQ==}
 
   object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
@@ -2537,6 +2537,11 @@ snapshots:
   '@types/node@24.10.1':
     dependencies:
       undici-types: 7.16.0
+    optional: true
+
+  '@types/node@24.10.2':
+    dependencies:
+      undici-types: 7.16.0
 
   '@vitest/expect@4.0.15':
     dependencies:
@@ -2547,13 +2552,13 @@ snapshots:
       chai: 6.2.1
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.0.15(vite@7.2.6(@types/node@24.10.1))':
+  '@vitest/mocker@4.0.15(vite@7.2.6(@types/node@24.10.2))':
     dependencies:
       '@vitest/spy': 4.0.15
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.2.6(@types/node@24.10.1)
+      vite: 7.2.6(@types/node@24.10.2)
 
   '@vitest/pretty-format@4.0.15':
     dependencies:
@@ -2898,7 +2903,7 @@ snapshots:
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.6
       is-potential-custom-element-name: 1.0.1
-      nwsapi: 2.2.22
+      nwsapi: 2.2.23
       parse5: 7.3.0
       rrweb-cssom: 0.8.0
       saxes: 6.0.0
@@ -2967,7 +2972,7 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  nwsapi@2.2.22:
+  nwsapi@2.2.23:
     optional: true
 
   object-assign@4.1.1: {}
@@ -3316,7 +3321,7 @@ snapshots:
       '@types/node': 24.10.1
       fsevents: 2.3.3
 
-  vite@7.2.6(@types/node@24.10.1):
+  vite@7.2.6(@types/node@24.10.2):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.3)
@@ -3325,13 +3330,13 @@ snapshots:
       rollup: 4.53.3
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 24.10.1
+      '@types/node': 24.10.2
       fsevents: 2.3.3
 
-  vitest@4.0.15(@types/node@24.10.1)(jsdom@26.1.0):
+  vitest@4.0.15(@types/node@24.10.2)(jsdom@26.1.0):
     dependencies:
       '@vitest/expect': 4.0.15
-      '@vitest/mocker': 4.0.15(vite@7.2.6(@types/node@24.10.1))
+      '@vitest/mocker': 4.0.15(vite@7.2.6(@types/node@24.10.2))
       '@vitest/pretty-format': 4.0.15
       '@vitest/runner': 4.0.15
       '@vitest/snapshot': 4.0.15
@@ -3348,10 +3353,10 @@ snapshots:
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.2.6(@types/node@24.10.1)
+      vite: 7.2.6(@types/node@24.10.2)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 24.10.1
+      '@types/node': 24.10.2
       jsdom: 26.1.0
     transitivePeerDependencies:
       - jiti
