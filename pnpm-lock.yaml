@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    '@types/node':
+      specifier: ^24.1.0
+      version: 24.10.4
     rimraf:
       specifier: ^6.0.1
       version: 6.1.2
@@ -43,7 +46,7 @@ importers:
         version: 7.28.5
       globby:
         specifier: ^16.0.0
-        version: 16.0.0
+        version: 16.1.0
     devDependencies:
       '@types/babel__traverse':
         specifier: ^7.20.7
@@ -1307,8 +1310,8 @@ packages:
     resolution: {integrity: sha512-tvZgpqk6fz4BaNZ66ZsRaZnbHvP/jG3uKJvAZOwEVUL4RTA5nJeeLYfyN9/VA8NX/V3IBG+hkeuGpKjvELkVhA==}
     engines: {node: 20 || >=22}
 
-  globby@16.0.0:
-    resolution: {integrity: sha512-ejy4TJFga99yW6Q0uhM3pFawKWZmtZzZD/v/GwI5+9bCV5Ew+D2pSND6W7fUes5UykqSsJkUfxFVdRh7Q1+P3Q==}
+  globby@16.1.0:
+    resolution: {integrity: sha512-+A4Hq7m7Ze592k9gZRy4gJ27DrXRNnC1vPjxTt1qQxEY8RxagBkBxivkCwg7FxSTG0iLLEMaUx13oOr0R2/qcQ==}
     engines: {node: '>=20'}
 
   html-encoding-sniffer@4.0.0:
@@ -2828,7 +2831,7 @@ snapshots:
       minipass: 7.1.2
       path-scurry: 2.0.1
 
-  globby@16.0.0:
+  globby@16.1.0:
     dependencies:
       '@sindresorhus/merge-streams': 4.0.0
       fast-glob: 3.3.3
