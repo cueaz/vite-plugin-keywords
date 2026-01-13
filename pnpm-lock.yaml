@@ -6,9 +6,6 @@ settings:
 
 catalogs:
   default:
-    '@types/node':
-      specifier: ^24.1.0
-      version: 24.10.7
     rimraf:
       specifier: ^6.0.1
       version: 6.1.2
@@ -53,7 +50,7 @@ importers:
         version: 7.28.0
       '@types/node':
         specifier: 'catalog:'
-        version: 24.10.7
+        version: 24.10.8
       rimraf:
         specifier: 'catalog:'
         version: 6.1.2
@@ -62,7 +59,7 @@ importers:
         version: 8.5.1(postcss@8.5.6)(typescript@5.9.3)
       vitest:
         specifier: 'catalog:'
-        version: 4.0.17(@types/node@24.10.7)(jsdom@26.1.0)
+        version: 4.0.17(@types/node@24.10.8)(jsdom@26.1.0)
 
   packages/rollup-plugin-keywords:
     dependencies:
@@ -75,7 +72,7 @@ importers:
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
-        version: 24.10.7
+        version: 24.10.8
       rimraf:
         specifier: 'catalog:'
         version: 6.1.2
@@ -84,7 +81,7 @@ importers:
         version: 8.5.1(postcss@8.5.6)(typescript@5.9.3)
       vitest:
         specifier: 'catalog:'
-        version: 4.0.17(@types/node@24.10.7)(jsdom@26.1.0)
+        version: 4.0.17(@types/node@24.10.8)(jsdom@26.1.0)
 
   packages/vite-plugin-keywords:
     dependencies:
@@ -97,7 +94,7 @@ importers:
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
-        version: 24.10.7
+        version: 24.10.8
       rimraf:
         specifier: 'catalog:'
         version: 6.1.2
@@ -106,7 +103,7 @@ importers:
         version: 8.5.1(postcss@8.5.6)(typescript@5.9.3)
       vitest:
         specifier: 'catalog:'
-        version: 4.0.17(@types/node@24.10.7)(jsdom@26.1.0)
+        version: 4.0.17(@types/node@24.10.8)(jsdom@26.1.0)
 
 packages:
 
@@ -1094,8 +1091,8 @@ packages:
   '@types/node@24.10.1':
     resolution: {integrity: sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ==}
 
-  '@types/node@24.10.7':
-    resolution: {integrity: sha512-+054pVMzVTmRQV8BhpGv3UyfZ2Llgl8rdpDTon+cUH9+na0ncBVXj3wTUKh14+Kiz18ziM3b4ikpP5/Pc0rQEQ==}
+  '@types/node@24.10.8':
+    resolution: {integrity: sha512-r0bBaXu5Swb05doFYO2kTWHMovJnNVbCsII0fhesM8bNRlLhXIuckley4a2DaD+vOdmm5G+zGkQZAPZsF80+YQ==}
 
   '@vitest/expect@4.0.17':
     resolution: {integrity: sha512-mEoqP3RqhKlbmUmntNDDCJeTDavDR+fVYkSOw8qRwJFaW/0/5zA9zFeTrHqNtcmwh6j26yMmwx2PqUDPzt5ZAQ==}
@@ -2577,7 +2574,7 @@ snapshots:
       undici-types: 7.16.0
     optional: true
 
-  '@types/node@24.10.7':
+  '@types/node@24.10.8':
     dependencies:
       undici-types: 7.16.0
 
@@ -2590,13 +2587,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.0.17(vite@7.3.1(@types/node@24.10.7))':
+  '@vitest/mocker@4.0.17(vite@7.3.1(@types/node@24.10.8))':
     dependencies:
       '@vitest/spy': 4.0.17
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.1(@types/node@24.10.7)
+      vite: 7.3.1(@types/node@24.10.8)
 
   '@vitest/pretty-format@4.0.17':
     dependencies:
@@ -3357,7 +3354,7 @@ snapshots:
       '@types/node': 24.10.1
       fsevents: 2.3.3
 
-  vite@7.3.1(@types/node@24.10.7):
+  vite@7.3.1(@types/node@24.10.8):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.3)
@@ -3366,13 +3363,13 @@ snapshots:
       rollup: 4.55.1
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 24.10.7
+      '@types/node': 24.10.8
       fsevents: 2.3.3
 
-  vitest@4.0.17(@types/node@24.10.7)(jsdom@26.1.0):
+  vitest@4.0.17(@types/node@24.10.8)(jsdom@26.1.0):
     dependencies:
       '@vitest/expect': 4.0.17
-      '@vitest/mocker': 4.0.17(vite@7.3.1(@types/node@24.10.7))
+      '@vitest/mocker': 4.0.17(vite@7.3.1(@types/node@24.10.8))
       '@vitest/pretty-format': 4.0.17
       '@vitest/runner': 4.0.17
       '@vitest/snapshot': 4.0.17
@@ -3389,10 +3386,10 @@ snapshots:
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.1(@types/node@24.10.7)
+      vite: 7.3.1(@types/node@24.10.8)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 24.10.7
+      '@types/node': 24.10.8
       jsdom: 26.1.0
     transitivePeerDependencies:
       - jiti
