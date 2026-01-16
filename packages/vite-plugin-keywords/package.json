@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-keywords",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Vite plugin that provides minifiable Symbols (keywords) to use in place of string literals for aggressive minification/obfuscation.",
   "keywords": [
     "vite",
@@ -42,10 +42,13 @@
     "test": "vitest"
   },
   "dependencies": {
-    "minifiable-keywords": "workspace:*"
+    "@babel/parser": "catalog:",
+    "@babel/traverse": "catalog:",
+    "globby": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",
+    "minifiable-keywords": "workspace:*",
     "rimraf": "catalog:",
     "tsup": "catalog:",
     "vitest": "catalog:"
