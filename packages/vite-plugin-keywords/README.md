@@ -142,22 +142,19 @@ pnpm add -D vite-plugin-keywords
    });
    ```
 
-2. Include the generated types file in your `tsconfig.json` or `src/env.d.ts`.
+2. Include the generated types file in your `tsconfig.json`.
 
    ```jsonc
    // tsconfig.json
    {
      // ...
-     "include": [
-       "src",
-       ".keywords/types.d.ts", // Add this line
-     ],
+     "compilerOptions": {
+       // ...
+       "paths": {
+         "virtual:keywords": ["./.keywords/index.d.ts"],
+       },
+     },
    }
-   ```
-
-   ```ts
-   // src/env.d.ts
-   /// <reference path="../.keywords/types.d.ts" />
    ```
 
 3. Exclude the generated types file from your version control system (e.g., Git).
@@ -178,7 +175,7 @@ pnpm add -D vite-plugin-keywords
    }
    ```
 
-5. The `.keywords/types.d.ts` type file is created automatically on `vite dev/build`, or manually via the `keywords` script.
+5. The `.keywords/index.d.ts` type file is created automatically on `vite dev/build`, or manually via the `keywords` script.
 
 ## Options
 

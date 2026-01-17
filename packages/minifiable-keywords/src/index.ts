@@ -125,16 +125,14 @@ export const generateTypesFile = async (
   collectedKeywords: Set<string>,
   root: string,
   dirname: string = '.keywords',
-  filename: string = 'types.d.ts',
+  filename: string = 'index.d.ts',
 ): Promise<void> => {
   const keywordDeclarations = [...collectedKeywords]
-    .map((key) => `const ${keywordConstPrefix}${key}: unique symbol;`)
-    .map((line) => `  ${line}`)
+    .map((key) => `declare const ${keywordConstPrefix}${key}: unique symbol;`)
     .join('\n');
-  const exportDeclaration = createExportDeclaration(collectedKeywords)
-    .map((line) => `  ${line}`)
-    .join('\n');
-  const content = `declare module '${VIRTUAL_MODULE_ID}' {\n${keywordDeclarations}\n${exportDeclaration}\n}`;
+  const exportDeclaration =
+    createExportDeclaration(collectedKeywords).join('\n');
+  const content = `${keywordDeclarations}\n${exportDeclaration}\n`;
   const pluginRoot = path.join(root, dirname);
   await mkdir(pluginRoot, { recursive: true });
   await writeFile(path.join(pluginRoot, filename), `${content.trim()}\n`);
