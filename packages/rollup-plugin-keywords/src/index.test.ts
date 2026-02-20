@@ -66,4 +66,26 @@ describe('rollup-plugin-keywords', () => {
 
     process.cwd = originalCwd;
   });
+
+  it('should collect keywords from additional modules when configured', async () => {
+    const originalCwd = process.cwd;
+    const root = path.resolve(__dirname, '..', 'tests', 'fixtures');
+    process.cwd = () => root;
+
+    const plugin = keywordsPlugin({
+      additionalModulesToScan: ['react'],
+    }) as Plugin;
+    const context = createMockPluginContext();
+
+    const buildStart = plugin.buildStart as Function;
+    await buildStart.call(context);
+
+    const load = plugin.load as Function;
+    const moduleContent = await load.call(context, RESOLVED_VIRTUAL_MODULE_ID);
+    expect(moduleContent).toContain('rollup_foo');
+    expect(moduleContent).toContain('rollup_bar');
+    expect(moduleContent).toContain('useState');
+
+    process.cwd = originalCwd;
+  });
 });

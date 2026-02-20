@@ -1,16 +1,21 @@
 import {
+  buildOptions,
   collectKeywordsAndGenerateTypes,
   createPrefixedLogger,
   generateModuleCode,
   RESOLVED_VIRTUAL_MODULE_ID,
   splitQuery,
   VIRTUAL_MODULE_ID,
+  type KeywordsPluginOptions,
   type PrefixedLogger,
 } from 'minifiable-keywords';
 import type { Plugin } from 'rollup';
 import { PLUGIN_NAME } from './shared';
 
-export const keywordsPlugin = (): Plugin => {
+export const keywordsPlugin = (
+  options?: Partial<KeywordsPluginOptions>,
+): Plugin => {
+  const pluginOptions = buildOptions(options);
   let collectedKeywords: Set<string>;
   let logger: PrefixedLogger;
   const root = process.cwd();
@@ -18,6 +23,9 @@ export const keywordsPlugin = (): Plugin => {
 
   return {
     name: PLUGIN_NAME,
+    api: {
+      options: pluginOptions,
+    },
 
     async buildStart() {
       const pluginThis = this;
@@ -30,7 +38,12 @@ export const keywordsPlugin = (): Plugin => {
         PLUGIN_NAME,
         false,
       );
-      collectedKeywords = await collectKeywordsAndGenerateTypes(root, logger);
+      collectedKeywords = await collectKeywordsAndGenerateTypes(
+        root,
+        logger,
+        [],
+        pluginOptions,
+      );
     },
 
     resolveId(source, importer) {

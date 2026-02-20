@@ -7,6 +7,18 @@ import { globby } from 'globby';
 export const VIRTUAL_MODULE_ID = 'virtual:keywords';
 export const RESOLVED_VIRTUAL_MODULE_ID = `\0${VIRTUAL_MODULE_ID}`;
 
+export interface KeywordsPluginOptions {
+  additionalModulesToScan: string[];
+}
+
+export const buildOptions = (
+  options: Partial<KeywordsPluginOptions> = {},
+): KeywordsPluginOptions => {
+  return {
+    additionalModulesToScan: options.additionalModulesToScan || [],
+  };
+};
+
 export interface Logger {
   info: (message: string) => void;
   warn: (message: string) => void;
@@ -38,8 +50,20 @@ const traverse =
     ? _traverse
     : ((_traverse as any).default as typeof _traverse);
 
-export const extractKeywords = (code: string): Set<string> => {
+export const extractKeywords = (
+  code: string,
+  additionalModulesToScan: string[] = [],
+): Set<string> => {
   const keywords = new Set<string>();
+
+  // Fast-path: Skip parsing if no relevant imports are present in the code.
+  const containsTargetModule =
+    code.includes(VIRTUAL_MODULE_ID) ||
+    additionalModulesToScan.some((moduleName) => code.includes(moduleName));
+
+  if (!containsTargetModule) {
+    return keywords;
+  }
 
   let ast: Node;
   try {
@@ -58,22 +82,25 @@ export const extractKeywords = (code: string): Set<string> => {
     enter(nodePath) {
       const node = nodePath.node;
 
-      if (
-        node.type === 'ImportDeclaration' &&
-        node.source.value === VIRTUAL_MODULE_ID
-      ) {
-        for (const specifier of node.specifiers) {
-          if (specifier.type === 'ImportNamespaceSpecifier') {
-            keywordNamespaces.add(specifier.local.name);
-          }
+      if (node.type === 'ImportDeclaration') {
+        const isTargetModule =
+          node.source.value === VIRTUAL_MODULE_ID ||
+          additionalModulesToScan.includes(node.source.value);
 
-          if (specifier.type === 'ImportDefaultSpecifier') {
-            keywords.add('default');
-          }
+        if (isTargetModule) {
+          for (const specifier of node.specifiers) {
+            if (specifier.type === 'ImportNamespaceSpecifier') {
+              keywordNamespaces.add(specifier.local.name);
+            }
 
-          if (specifier.type === 'ImportSpecifier') {
-            if (specifier.imported.type === 'Identifier') {
-              keywords.add(specifier.imported.name);
+            if (specifier.type === 'ImportDefaultSpecifier') {
+              keywords.add('default');
+            }
+
+            if (specifier.type === 'ImportSpecifier') {
+              if (specifier.imported.type === 'Identifier') {
+                keywords.add(specifier.imported.name);
+              }
             }
           }
         }
@@ -142,6 +169,7 @@ export const collectKeywordsFromFiles = async (
   root: string,
   logger: PrefixedLogger,
   ignoredDirs: string[] = [],
+  options: KeywordsPluginOptions = buildOptions(),
 ): Promise<Set<string>> => {
   const collectedKeywords = new Set<string>();
 
@@ -154,15 +182,26 @@ export const collectKeywordsFromFiles = async (
     gitignore: true,
   });
 
-  await Promise.all(
-    files.map(async (file) => {
-      const code = await readFile(file, 'utf-8');
-      const keywords = extractKeywords(code);
-      for (const key of keywords) {
-        collectedKeywords.add(key);
-      }
-    }),
-  );
+  const concurrency = 100;
+  for (let i = 0; i < files.length; i += concurrency) {
+    const chunk = files.slice(i, i + concurrency);
+    await Promise.all(
+      chunk.map(async (file) => {
+        try {
+          const code = await readFile(file, 'utf-8');
+          const keywords = extractKeywords(
+            code,
+            options.additionalModulesToScan,
+          );
+          for (const key of keywords) {
+            collectedKeywords.add(key);
+          }
+        } catch (error: any) {
+          logger.warn(`Failed to process file ${file}: ${error.message}`);
+        }
+      }),
+    );
+  }
 
   logger.info(
     `Scan complete. Found ${collectedKeywords.size} unique keywords.`,
@@ -175,11 +214,13 @@ export const collectKeywordsAndGenerateTypes = async (
   root: string,
   logger: PrefixedLogger,
   ignoredDirs?: string[],
+  options?: KeywordsPluginOptions,
 ): Promise<Set<string>> => {
   const collectedKeywords = await collectKeywordsFromFiles(
     root,
     logger,
     ignoredDirs,
+    options,
   );
   await generateTypesFile(collectedKeywords, root);
   return collectedKeywords;

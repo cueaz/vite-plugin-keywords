@@ -177,12 +177,42 @@ pnpm add -D vite-plugin-keywords
 
 5. The `.keywords/index.d.ts` type file is created automatically on `vite dev/build`, or manually via the `keywords` script.
 
+## CLI
+
+You can manually generate the keyword types using the provided CLI. This is useful for type-checking in CI or before a build.
+
+```bash
+npx keywords [--config <path>]
+```
+
+| Option     | Shorthand | Description                                    |
+| ---------- | --------- | ---------------------------------------------- |
+| `--config` | `-c`      | Specify a custom Vite configuration file path. |
+
 ## Options
 
-None
+### `additionalModulesToScan`
+
+- **Type:** `string[]`
+- **Default:** `[]`
+
+An array of module specifiers (e.g. `'react'` or `'@vue/runtime-core'`) that the plugin should scan for keyword usage in addition to `virtual:keywords`. This is useful if you alias internal module exports that you wish to have extracted as keywords automatically.
+
+```ts
+import keywords from 'vite-plugin-keywords';
+
+export default defineConfig({
+  plugins: [
+    keywords({
+      additionalModulesToScan: ['react'],
+    }),
+  ],
+});
+```
 
 ## Limitations
 
+- **Serialization**: Keywords are compiled down to `Symbol` primitives, which cannot be serialized (e.g., via `JSON.stringify()`). Avoid using keywords for keys in state objects that need to be persisted to LocalStorage, sent over network boundaries, or used in SSR hydration.
 - **(TODO) Frameworks**: The plugin uses Babel to parse JavaScript and TypeScript files. It cannot parse keywords from Vue, Svelte, or Astro files yet.
 - **Dynamic Access**: Only static property access (e.g., `K.myKeyword`) is detected. Dynamic, computed access (e.g., `K['myKeyword']`) will not be identified by the plugin.
 

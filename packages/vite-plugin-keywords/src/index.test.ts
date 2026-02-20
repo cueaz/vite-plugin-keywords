@@ -56,4 +56,24 @@ describe('vite-plugin-keywords', () => {
     expect(moduleContent).toContain('vite_foo');
     expect(moduleContent).toContain('vite_bar');
   });
+
+  it('should collect keywords from additional modules when configured', async () => {
+    const root = path.resolve(__dirname, '..', 'tests', 'fixtures');
+    const config = createMockConfig(root);
+    const plugin = keywordsPlugin({
+      additionalModulesToScan: ['react'],
+    }) as Plugin;
+
+    // @ts-expect-error - configResolved is a function
+    plugin.configResolved(config);
+
+    const buildStart = plugin.buildStart as Function;
+    await buildStart.call(null);
+
+    const load = plugin.load as Function;
+    const moduleContent = await load.call(null, RESOLVED_VIRTUAL_MODULE_ID);
+    expect(moduleContent).toContain('vite_foo');
+    expect(moduleContent).toContain('vite_bar');
+    expect(moduleContent).toContain('useState');
+  });
 });

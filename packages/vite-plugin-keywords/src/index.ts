@@ -1,5 +1,6 @@
 import path from 'node:path';
 import {
+  buildOptions,
   collectKeywordsAndGenerateTypes,
   createPrefixedLogger,
   extractKeywords,
@@ -8,12 +9,16 @@ import {
   RESOLVED_VIRTUAL_MODULE_ID,
   splitQuery,
   VIRTUAL_MODULE_ID,
+  type KeywordsPluginOptions,
   type PrefixedLogger,
 } from 'minifiable-keywords';
 import type { EnvironmentModuleGraph, Plugin, ResolvedConfig } from 'vite';
 import { PLUGIN_NAME } from './shared';
 
-export const keywordsPlugin = (): Plugin => {
+export const keywordsPlugin = (
+  options?: Partial<KeywordsPluginOptions>,
+): Plugin => {
+  const pluginOptions = buildOptions(options);
   let collectedKeywords: Set<string>;
   let config: ResolvedConfig;
   let logger: PrefixedLogger;
@@ -31,6 +36,9 @@ export const keywordsPlugin = (): Plugin => {
 
   return {
     name: PLUGIN_NAME,
+    api: {
+      options: pluginOptions,
+    },
 
     configResolved(resolvedConfig) {
       config = resolvedConfig;
@@ -42,6 +50,7 @@ export const keywordsPlugin = (): Plugin => {
         config.root,
         logger,
         [config.build.outDir, config.cacheDir],
+        pluginOptions,
       );
     },
 
@@ -75,7 +84,10 @@ export const keywordsPlugin = (): Plugin => {
       }
 
       const code = await read();
-      const keywordsInFile = extractKeywords(code);
+      const keywordsInFile = extractKeywords(
+        code,
+        pluginOptions.additionalModulesToScan,
+      );
       if (keywordsInFile.size === 0) return;
 
       const initialSize = collectedKeywords.size;

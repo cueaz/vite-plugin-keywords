@@ -23,6 +23,20 @@ describe('minifiable-keywords', () => {
       expect(keywords).toEqual(new Set());
     });
 
+    it('should extract keywords from additional modules to scan', () => {
+      const code = `
+        import * as K from 'virtual:keywords';
+        import { useState } from 'react';
+        import * as M from '@my/module';
+
+        const a = K.foo;
+        const b = useState();
+        const c = M.myFunc;
+      `;
+      const keywords = extractKeywords(code, ['react', '@my/module']);
+      expect(keywords).toEqual(new Set(['foo', 'useState', 'myFunc']));
+    });
+
     it('should extract keywords from default and named imports', () => {
       const code = `
         import def, { foo, bar as baz } from 'virtual:keywords';
