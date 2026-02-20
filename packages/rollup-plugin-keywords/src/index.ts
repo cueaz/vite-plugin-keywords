@@ -19,7 +19,7 @@ export const keywordsPlugin = (options?: KeywordsPluginOptions): Plugin => {
   let collectedKeywords: Set<string>;
   let logger: PrefixedLogger;
   const root = process.cwd();
-  const isDev = process.env.NODE_ENV === 'development';
+  const isDev = pluginOptions.isDev ?? process.env.NODE_ENV === 'development';
 
   return {
     name: PLUGIN_NAME,

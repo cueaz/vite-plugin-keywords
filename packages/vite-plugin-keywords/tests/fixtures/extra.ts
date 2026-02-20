@@ -1,3 +1,4 @@
-import { useState } from 'react';
+// @ts-nocheck
+import { customKeyword } from '@/shared/keywords';
 
-const b = useState();
+const b = customKeyword;

@@ -73,7 +73,7 @@ describe('rollup-plugin-keywords', () => {
     process.cwd = () => root;
 
     const plugin = keywordsPlugin({
-      additionalModulesToScan: ['react'],
+      additionalModulesToScan: ['@/shared/keywords'],
     }) as Plugin;
     const context = createMockPluginContext();
 
@@ -84,7 +84,7 @@ describe('rollup-plugin-keywords', () => {
     const moduleContent = await load.call(context, RESOLVED_VIRTUAL_MODULE_ID);
     expect(moduleContent).toContain('rollup_foo');
     expect(moduleContent).toContain('rollup_bar');
-    expect(moduleContent).toContain('useState');
+    expect(moduleContent).toContain('customKeyword');
 
     process.cwd = originalCwd;
   });

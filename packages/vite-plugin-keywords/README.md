@@ -196,7 +196,9 @@ npx keywords [--config <path>]
 - **Type:** `string[]`
 - **Default:** `[]`
 
-An array of module specifiers (e.g. `'react'` or `'@vue/runtime-core'`) that the plugin should scan for keyword usage in addition to `virtual:keywords`. This is useful if you alias internal module exports that you wish to have extracted as keywords automatically.
+An array of module specifiers that the plugin should scan for keyword usage in addition to `virtual:keywords`.
+
+This is particularly useful in a monorepo where keywords are centralized in a shared package (e.g., `@myrepo/keywords` which simply re-exports `virtual:keywords`).
 
 ```ts
 import keywords from 'vite-plugin-keywords';
@@ -204,11 +206,23 @@ import keywords from 'vite-plugin-keywords';
 export default defineConfig({
   plugins: [
     keywords({
-      additionalModulesToScan: ['react'],
+      additionalModulesToScan: ['@myrepo/keywords'], // Allows extracting keywords imported from the shared package
     }),
   ],
 });
 ```
+
+### `isDev`
+
+- **Type:** `boolean`
+- **Default:** `process.env.NODE_ENV === 'development'` (for Rollup) or `config.mode === 'development'` (for Vite)
+
+Manually overrides the build environment mode.
+
+- `true`: Generates `Symbol('keyword')` with string descriptions for easier debugging.
+- `false`: Generates empty `Symbol()` to completely remove string literals from the bundle.
+
+This is especially useful in Rollup to output both dev and prod bundles from a single configuration without relying on `process.env.NODE_ENV`.
 
 ## Limitations
 

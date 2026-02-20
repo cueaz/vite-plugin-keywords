@@ -61,7 +61,7 @@ describe('vite-plugin-keywords', () => {
     const root = path.resolve(__dirname, '..', 'tests', 'fixtures');
     const config = createMockConfig(root);
     const plugin = keywordsPlugin({
-      additionalModulesToScan: ['react'],
+      additionalModulesToScan: ['@/shared/keywords'],
     }) as Plugin;
 
     // @ts-expect-error - configResolved is a function
@@ -74,6 +74,6 @@ describe('vite-plugin-keywords', () => {
     const moduleContent = await load.call(null, RESOLVED_VIRTUAL_MODULE_ID);
     expect(moduleContent).toContain('vite_foo');
     expect(moduleContent).toContain('vite_bar');
-    expect(moduleContent).toContain('useState');
+    expect(moduleContent).toContain('customKeyword');
   });
 });

@@ -9,15 +9,19 @@ export const RESOLVED_VIRTUAL_MODULE_ID = `\0${VIRTUAL_MODULE_ID}`;
 
 export interface KeywordsPluginOptions {
   additionalModulesToScan?: string[];
+  isDev?: boolean;
 }
 
-export type ResolvedKeywordsPluginOptions = Required<KeywordsPluginOptions>;
+export type ResolvedKeywordsPluginOptions = Required<
+  Omit<KeywordsPluginOptions, 'isDev'>
+> & { isDev?: boolean };
 
 export const resolveOptions = (
   options?: KeywordsPluginOptions,
 ): ResolvedKeywordsPluginOptions => {
   return {
     additionalModulesToScan: options?.additionalModulesToScan || [],
+    isDev: options?.isDev,
   };
 };
 

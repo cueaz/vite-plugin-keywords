@@ -67,7 +67,7 @@ export const keywordsPlugin = (options?: KeywordsPluginOptions): Plugin => {
     load(id) {
       const [validId] = splitQuery(id);
       if (validId === RESOLVED_VIRTUAL_MODULE_ID) {
-        const isDev = config.mode === 'development';
+        const isDev = pluginOptions.isDev ?? config.mode === 'development';
         return generateModuleCode(collectedKeywords, isDev);
       }
     },
