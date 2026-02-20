@@ -1,9 +1,9 @@
 import {
-  buildOptions,
   collectKeywordsAndGenerateTypes,
   createPrefixedLogger,
   generateModuleCode,
   RESOLVED_VIRTUAL_MODULE_ID,
+  resolveOptions,
   splitQuery,
   VIRTUAL_MODULE_ID,
   type KeywordsPluginOptions,
@@ -12,10 +12,10 @@ import {
 import type { Plugin } from 'rollup';
 import { PLUGIN_NAME } from './shared';
 
-export const keywordsPlugin = (
-  options?: Partial<KeywordsPluginOptions>,
-): Plugin => {
-  const pluginOptions = buildOptions(options);
+export type { KeywordsPluginOptions } from 'minifiable-keywords';
+
+export const keywordsPlugin = (options?: KeywordsPluginOptions): Plugin => {
+  const pluginOptions = resolveOptions(options);
   let collectedKeywords: Set<string>;
   let logger: PrefixedLogger;
   const root = process.cwd();

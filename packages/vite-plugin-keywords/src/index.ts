@@ -1,12 +1,12 @@
 import path from 'node:path';
 import {
-  buildOptions,
   collectKeywordsAndGenerateTypes,
   createPrefixedLogger,
   extractKeywords,
   generateModuleCode,
   generateTypesFile,
   RESOLVED_VIRTUAL_MODULE_ID,
+  resolveOptions,
   splitQuery,
   VIRTUAL_MODULE_ID,
   type KeywordsPluginOptions,
@@ -15,10 +15,10 @@ import {
 import type { EnvironmentModuleGraph, Plugin, ResolvedConfig } from 'vite';
 import { PLUGIN_NAME } from './shared';
 
-export const keywordsPlugin = (
-  options?: Partial<KeywordsPluginOptions>,
-): Plugin => {
-  const pluginOptions = buildOptions(options);
+export type { KeywordsPluginOptions } from 'minifiable-keywords';
+
+export const keywordsPlugin = (options?: KeywordsPluginOptions): Plugin => {
+  const pluginOptions = resolveOptions(options);
   let collectedKeywords: Set<string>;
   let config: ResolvedConfig;
   let logger: PrefixedLogger;

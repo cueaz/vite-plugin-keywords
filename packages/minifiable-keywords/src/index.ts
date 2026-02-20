@@ -8,14 +8,16 @@ export const VIRTUAL_MODULE_ID = 'virtual:keywords';
 export const RESOLVED_VIRTUAL_MODULE_ID = `\0${VIRTUAL_MODULE_ID}`;
 
 export interface KeywordsPluginOptions {
-  additionalModulesToScan: string[];
+  additionalModulesToScan?: string[];
 }
 
-export const buildOptions = (
-  options: Partial<KeywordsPluginOptions> = {},
-): KeywordsPluginOptions => {
+export type ResolvedKeywordsPluginOptions = Required<KeywordsPluginOptions>;
+
+export const resolveOptions = (
+  options?: KeywordsPluginOptions,
+): ResolvedKeywordsPluginOptions => {
   return {
-    additionalModulesToScan: options.additionalModulesToScan || [],
+    additionalModulesToScan: options?.additionalModulesToScan || [],
   };
 };
 
@@ -169,8 +171,9 @@ export const collectKeywordsFromFiles = async (
   root: string,
   logger: PrefixedLogger,
   ignoredDirs: string[] = [],
-  options: KeywordsPluginOptions = buildOptions(),
+  options?: KeywordsPluginOptions,
 ): Promise<Set<string>> => {
+  const resolvedOptions = resolveOptions(options);
   const collectedKeywords = new Set<string>();
 
   logger.info('Scanning project files for keywords...');
@@ -191,7 +194,7 @@ export const collectKeywordsFromFiles = async (
           const code = await readFile(file, 'utf-8');
           const keywords = extractKeywords(
             code,
-            options.additionalModulesToScan,
+            resolvedOptions.additionalModulesToScan,
           );
           for (const key of keywords) {
             collectedKeywords.add(key);
