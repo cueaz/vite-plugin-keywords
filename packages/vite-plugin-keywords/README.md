@@ -11,6 +11,13 @@
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: https://github.com/cueaz/vite-plugine-keywords/blob/main/LICENSE
 
+> [!WARNING]
+> **DEPRECATED: Please migrate to [unplugin-keywords](https://github.com/cueaz/unplugin-keywords) (v2.0.0+).**
+>
+> This version (v1) is deprecated due to the serialization limitations of `Symbol` primitives and the structural constraints of its parsing logic.
+>
+> The project has been completely rebuilt as a transformation plugin. V2 securely maps structural strings to deterministic base62 hashes, guaranteeing scope integrity and robust syntax support without runtime collisions. All future development will continue exclusively on V2.
+
 > [!NOTE]
 > A Rollup version of this plugin, `rollup-plugin-keywords`, is also available. The primary difference is that the Vite plugin utilizes the `hotUpdate` hook to incrementally collect keywords and update modules and types during development. While this documentation is written primarily for the Vite plugin, the setup is almost identical—just add `rollup-plugin-keywords` to your Rollup configuration.
 
